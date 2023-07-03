@@ -1,7 +1,7 @@
 /*
-A simple logic evaluator that can parse and evaluate logic strings.
+A simple logic evaluator that can parse and evaluate logical expression strings.
 
-Feature: Can only parse char* input string and evaluate it at the same time. Outputs 1 for true and 0 for false. Probably has bugs
+Features: Can only parse char* input string and evaluate it at the same time. Outputs True or False. Probably has bugs
 
 How to use: Edit Input string, compile and run parser.c. No whitespaces are supported.
 
@@ -10,7 +10,7 @@ False - 'F'
 Negate - '~'
 Conjunction - '^'
 Disjunction - 'v'
-parentheses supported
+Parentheses supported
 
 Example: "~(T^~F)"
 
@@ -27,7 +27,7 @@ bool expression();
 bool term();
 bool factor();
 
-char* input = "~(T^~F)";
+char* input = "~(T^~F)^(T)"; // Edit Here ***
 size_t position = 0;
 
 void error() {
@@ -104,8 +104,7 @@ bool term() {
     return result;
 }
 
-int main() {
-    
-    printf("%d\n",expression());
+int main(void) {
+    printf("%s\n",(expression()) ? "True" : "False");
     return 0;
 }
