@@ -40,10 +40,13 @@ void _ev_error() {
 
 #define MAX_SIZE 100
 
-char _ev_input[MAX_SIZE]; // Edit Here ***
+#define CURRENT _ev_input[_ev_index]
+char _ev_input[MAX_SIZE];
 size_t _ev_index;
 
 void consume(char expected) {
+    printf("Consumed:%c\n",expected);
+    
     if (_ev_input[_ev_index] == expected) {
         _ev_index++;
     }
@@ -70,6 +73,8 @@ bool literal() {
 }
 
 bool factor() {
+    printf("Factor %c\n",_ev_input[_ev_index]);
+    
     char c = _ev_input[_ev_index];
     bool negate = false;
     bool output;
@@ -77,6 +82,7 @@ bool factor() {
         consume('~');
         negate = true;
     }
+
     if (_ev_input[_ev_index] == 'T' | _ev_input[_ev_index] == 'F') {
         output = literal();
     }
@@ -93,27 +99,37 @@ bool factor() {
 }
 
 bool expression() {
+    printf("Expression %c\n",CURRENT);
+    
     bool result = term();
     while(_ev_input[_ev_index] == 'v') {
         consume('v');
-        result = result || term();
+        printf("After consuming v: %c\n",CURRENT);
+        bool t = term();
+        result = result || t;
     }
     
     return result;
 }
 
 bool term() {
+    printf("Term: %c \n", CURRENT);
+    
     bool result = factor();
 
     while (_ev_input[_ev_index] == '^') {
         consume('^');
-        result = result && factor();
+        bool f = factor();
+        result = result && f;
     }
 
     return result;
 }
 
 bool evaluate(char* str) {
+    printf("Input: %s\n",str);
+    
+    memset(_ev_input,0, MAX_SIZE);
     strcpy(_ev_input, str);
     _ev_index = 0;
 

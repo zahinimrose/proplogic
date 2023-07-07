@@ -31,6 +31,8 @@ void P_Q_print_truth_table(char* str) {
             char* a = replace_variable_to_literal(str, 'P', i);
             char* b = replace_variable_to_literal(a, 'Q', j);
             free(a);
+            printf("%s\n",b);
+            
             printf("%c|%c|%c\n",bool_to_literal(i), bool_to_literal(j), bool_to_literal(evaluate(b)));
             free(b);
             //printf("_____\n");
@@ -41,7 +43,9 @@ void P_Q_print_truth_table(char* str) {
 
 int main() {
     
-    P_Q_print_truth_table("~PvQ");
+    P_Q_print_truth_table("~((~PvQ)^Q)vQ");
+    //printf("%d\n",evaluate("(~FvT)"));
+    
     
     return 0;
 }
