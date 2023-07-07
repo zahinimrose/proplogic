@@ -18,7 +18,6 @@ Example: "~(T^~F)"
 
 TODO: 
 #Removal of whitespace
-#Bug fixes
 #Ensure memory safety
 */
 #ifndef EVALUATOR_C
@@ -40,17 +39,15 @@ void _ev_error() {
 
 #define MAX_SIZE 100
 
-#define CURRENT _ev_input[_ev_index]
 char _ev_input[MAX_SIZE];
 size_t _ev_index;
+#define CURRENT _ev_input[_ev_index]
 
 void consume(char expected) {
-    printf("Consumed:%c\n",expected);
-    
-    if (_ev_input[_ev_index] == expected) {
+    if (CURRENT == expected) {
         _ev_index++;
     }
-    else if (_ev_input[_ev_index] == '\0') {
+    else if (CURRENT == '\0') {
         printf("Parsing Completed\n");
     }
     else {
@@ -59,7 +56,7 @@ void consume(char expected) {
 }
 
 bool literal() {
-    char c = _ev_input[_ev_index];
+    char c = CURRENT;
     switch(c) {
         case 'T':
             consume(c);
@@ -73,20 +70,19 @@ bool literal() {
 }
 
 bool factor() {
-    printf("Factor %c\n",_ev_input[_ev_index]);
-    
-    char c = _ev_input[_ev_index];
+    char c = CURRENT;
     bool negate = false;
     bool output;
+
     if (c == '~') { // negation
         consume('~');
         negate = true;
     }
 
-    if (_ev_input[_ev_index] == 'T' | _ev_input[_ev_index] == 'F') {
+    if (CURRENT == 'T' | CURRENT == 'F') {
         output = literal();
     }
-    else if (_ev_input[_ev_index] == '(') {
+    else if (CURRENT == '(') {
         consume('(');
         output = expression();
         consume(')');
@@ -99,12 +95,9 @@ bool factor() {
 }
 
 bool expression() {
-    printf("Expression %c\n",CURRENT);
-    
     bool result = term();
-    while(_ev_input[_ev_index] == 'v') {
+    while(CURRENT == 'v') {
         consume('v');
-        printf("After consuming v: %c\n",CURRENT);
         bool t = term();
         result = result || t;
     }
@@ -113,11 +106,9 @@ bool expression() {
 }
 
 bool term() {
-    printf("Term: %c \n", CURRENT);
-    
     bool result = factor();
 
-    while (_ev_input[_ev_index] == '^') {
+    while (CURRENT == '^') {
         consume('^');
         bool f = factor();
         result = result && f;
@@ -127,9 +118,6 @@ bool term() {
 }
 
 bool evaluate(char* str) {
-    printf("Input: %s\n",str);
-    
-    memset(_ev_input,0, MAX_SIZE);
     strcpy(_ev_input, str);
     _ev_index = 0;
 
