@@ -43,7 +43,7 @@ void P_Q_print_truth_table(char* str) {
 
 int main() {
     
-    P_Q_print_truth_table("PvT");
+    P_Q_print_truth_table("(~Pv~Q)");
     
     
     return 0;
