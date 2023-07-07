@@ -1,3 +1,6 @@
+#ifndef PROPVAR_C
+#define PROPVAR_C
+
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -23,7 +26,6 @@ char* replace_variable_to_literal(char* string, char var, bool truth) {
     return ans;
 }
 
-#if 1
 void P_Q_print_truth_table(char* str) {
     printf("P|Q|R\n_____\n");
     for (size_t i = 0; i < 2; ++i) {
@@ -39,12 +41,5 @@ void P_Q_print_truth_table(char* str) {
         }
     }
 }
-#endif
 
-int main() {
-    
-    P_Q_print_truth_table("(~Pv~Q)");
-    
-    
-    return 0;
-}
+#endif // PROPVAR_C
