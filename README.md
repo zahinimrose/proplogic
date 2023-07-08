@@ -13,17 +13,35 @@ gcc test.c -o test.exe
 ```
 
 ## Usage
-
+### Truth table Printer:
 Edit test.c
 ```c
 P_Q_print_truth_table("P^Q"); //Edit here
 ```
+True -  'T'
+
+False - 'F'
+
+Negate - '~'
+
+Conjunction - '^'
+
+Disjunction - 'v'
+
+First Variable 'P'
+
+Second Variable 'Q'
+
+(Parentheses supported)
+
+Example: "~(P^~Q)"
+
 Compile test.c with a C compiler like gcc
 
 ```bash
 gcc test.c -o test.exe
 ```
-Run:
+Run
 ```bash
 ./test.exe
 ```
