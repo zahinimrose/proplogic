@@ -27,14 +27,14 @@ char* replace_variable_to_literal(char* string, char var, bool truth) {
 }
 
 void P_Q_print_truth_table(char* str) {
-    printf("P|Q|R\n_____\n");
+    printf("P|Q|%s\n_______\n", str);
     for (size_t i = 0; i < 2; ++i) {
         for(size_t j =0; j < 2; ++j) {
             char* a = replace_variable_to_literal(str, 'P', i);
             char* b = replace_variable_to_literal(a, 'Q', j);
             free(a);
 
-            printf("%c|%c|%c\n",bool_to_literal(i), bool_to_literal(j), bool_to_literal(evaluate(b)));
+            printf("%c|%c| %c\n",bool_to_literal(i), bool_to_literal(j), bool_to_literal(evaluate(b)));
 
             free(b);
             //printf("_____\n");
