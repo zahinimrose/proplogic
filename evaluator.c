@@ -117,8 +117,21 @@ bool term() {
     return result;
 }
 
+//Makeshift preprocessor that edits P->Q to ~PvQ symbol for now. 
+//Only works for single charecter operands. Always use parentheses around it.
+void prep(char * str) {
+    for (size_t i =0; str[i] != '\0'; ++i) {
+        if (str[i] == '-') {
+            str[i] = str[i-1];
+            str[i-1] = '~';
+            str[i+1] = 'v';
+        }
+    }
+}
+
 bool evaluate(char* str) {
     strcpy(_ev_input, str);
+    prep(_ev_input);
     _ev_index = 0;
 
     bool ans = expression();
