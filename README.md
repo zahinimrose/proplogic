@@ -1,4 +1,4 @@
-# Foobar
+# Proplogic
 
 Proplogic is a project involving propositional logic. It will implement useful functionality involving propositional logic.
 
